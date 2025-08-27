@@ -1,0 +1,11 @@
+<odoo>
+  <record id="action_report_estate_property_card" model="ir.actions.report">
+    <field name="name">Ficha de Propiedad (PDF)</field>
+    <field name="model">estate.estate</field>
+    <field name="report_type">qweb-pdf</field>
+    <field name="report_name">estate.report_estate_property_card</field>
+    <field name="report_file">estate.report_estate_property_card</field>
+    <field name="binding_model_id" ref="estate.estate"/>
+    <field name="binding_type">report</field>
+  </record>
+</odoo>

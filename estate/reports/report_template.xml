@@ -1,0 +1,24 @@
+<odoo>
+  <template id="report_estate_property_card">
+    <t t-call="web.html_container">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="web.external_layout">
+          <div class="page">
+            <h2>Ficha de Propiedad</h2>
+            <p><strong>Nombre:</strong> <span t-field="o.name"/></p>
+            <p><strong>Precio:</strong> <span t-field="o.price"/></p>
+            <t t-if="o.image_ids">
+              <h3>Galería de Fotos</h3>
+              <t t-foreach="o.image_ids" t-as="img">
+                <div>
+                  <img t-att-src="img.image.value" style="width: 200px;"/>
+                  <p><t t-esc="img.name"/></p>
+                </div>
+              </t>
+            </t>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

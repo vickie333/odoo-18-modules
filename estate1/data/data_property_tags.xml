@@ -1,0 +1,8 @@
+<odoo>
+    <record id="cozy" model="estate.property.tags">
+        <field name="name">Cozy</field>
+    </record>
+    <record id="renovated" model="estate.property.tags">
+        <field name="name">Renovated</field>
+    </record>
+</odoo>

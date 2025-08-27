@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="estate_view_form" model="ir.ui.view">
+            <field name="name">estate.form</field>
+            <field name="model">estate.estate</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <header>
+                            <field name="state" widget="statusbar" statusbar_visible="new,offer_received,sold" 
+                                   options="{'clickable': '1'}"/>
+                        </header>
+                        <div class="name">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Enter the name of the estate"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="bedrooms" />
+                                <field name="bathrooms" />
+                                <field name="currency_id" />
+                            </group>
+                            <group>
+                                <field name="price" />
+                                <field name="for_sale" />
+                                <field name="category_id" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Estate information" name="estate_information">
+                                <group>
+                                    <group>
+                                        <field name="owners_ids" widget="many2many_tags"/>
+                                    </group>
+                                    <group>
+                                        <field name="date_availability" />
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Description" name="description">
+                                <field name="description" widget="html_composer_message"
+                                        force_save="1" nolabel="1"
+                                        placeholder="Enter the description of the estate"/>
+                            </page>
+                            <page string="Images" name="images">
+                                <field name="images_ids" widget="one2many">
+                                    <kanban>
+                                        <field name="name"/>
+                                        <field name="image"/>
+                                        <field name="description"/>
+                                        <field name="image_type"/>
+                                        <field name="sequence"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click">
+                                                    <div class="o_kanban_image">
+                                                        <img t-if="record.image.raw_value" 
+                                                             t-att-src="'data:image/png;base64,' + record.image.raw_value" 
+                                                             class="img img-fluid" 
+                                                             alt="Property Image"/>
+                                                        <div t-else="" class="o_kanban_image_empty">
+                                                            <i class="fa fa-image"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="o_kanban_record_bottom">
+                                                        <div class="o_kanban_record_headings">
+                                                            <strong class="o_kanban_record_title">
+                                                                <field name="name"/>
+                                                            </strong>
+                                                        </div>
+                                                        <div class="o_kanban_record_body">
+                                                            <field name="description"/>
+                                                        </div>
+                                                        <div class="o_kanban_record_bottom">
+                                                            <span class="badge badge-info">
+                                                                <field name="image_type"/>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                </field>
+                            </page>
+                            <page string="Measure" name="estate_measure">
+                                <group>
+                                    <field name="living_area"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="estate_view_list" model="ir.ui.view">
+            <field name="name">estate.list</field>
+            <field name="model">estate.estate</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name" />
+                    <field name="for_sale" />
+                    <field name="category_id" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="estate_view_search" model="ir.ui.view">
+            <field name="name">estate.search</field>
+            <field name="model">estate.estate</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" />
+                    <field name="price" string="Price"/>
+                    <separator/>
+                    <filter string="With Price" name="with_price_filter" domain="[('price', '>', 0)]"/>
+                    <filter string="No Price" name="no_price_filter" domain="[('price', '=', 0)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Category" name="category_id" domain="[]" context="{'group_by': 'category_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+        <record id="estate_act_window" model="ir.actions.act_window">
+            <field name="name">Estate</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">estate.estate</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Estate.
+                </p>
+            </field>
+        </record>
+
+        <record id="estate_image_action_window" model="ir.actions.act_window">
+            <field name="name">Images</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">estate.image</field>
+            <field name="view_mode">kanban,form,list</field>
+        </record>
+
+        <menuitem id="estate_root" name="Estate"/>
+        <menuitem id="estate_root_menu" name="Estate_Menu" parent="estate_root" action="estate_act_window"/>
+        <menuitem id="estate_image_menu" name="Images" parent="estate_root" action="estate_image_action_window"/>
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<odoo>
+    <record id="sale_measure_form_view" model="ir.ui.view">
+        <field name="name">sale.measure.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <notebook>
+                <page string="Measure" name="measure">
+                    <group>
+                        <group>
+                            <field name="area" placeholder="Enter the area in sqm"/>
+                            <field name="price_per_sqm" placeholder="Enter the price per sqm"/>
+                        </group>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
